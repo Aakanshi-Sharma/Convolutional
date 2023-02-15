@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import pickle
 import streamlit as st
 import keras.utils as image
@@ -11,16 +12,18 @@ def classify_fun(text):
     test_image = image.img_to_array(test_image)
     test_image = np.expand_dims(test_image, axis=0)
     result = model.predict(test_image)
-    st.title(result)
     if result[0][0] == 1:
-        st.title("Dog")
+        prediction = "Dog"
     else:
-        st.title("Cat")
-    # st.image(test_image)
+        prediction = "Cat"
+    with st.spinner('Wait for it...'):
+        time.sleep(1)
+
+    st.title(prediction)
 
 
 # UI
-st.title("Classifier")
+st.title("Cats vs Dogs Classification")
 st.subheader("Check whether it is a dog or cat")
 uploaded_file = st.file_uploader("Choose a file")
 
